@@ -1,0 +1,6 @@
+rootProject.name = 'spystagram.backend'
+include 'jwt-public-config'
+include 'auth-server'
+include 'resource-server'
+include 'aggregation-server'
+

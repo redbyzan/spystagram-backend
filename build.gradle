@@ -1,0 +1,19 @@
+group 'io.redbyzan'
+version '0.1'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":jwt-public-config")
+    compile project(":auth-server")
+    compile project(":resource-server")
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
