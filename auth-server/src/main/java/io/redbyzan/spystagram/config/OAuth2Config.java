@@ -1,5 +1,6 @@
 package io.redbyzan.spystagram.config;
 
+import io.redbyzan.spystagram.common.Constant;
 import io.redbyzan.spystagram.handler.SparklrUserApprovalHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,13 +32,12 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     public static final String DUMMY_RESOURCE_ID = "dummy";
-    public static final String KEY_PASSWORD = "redbyzan1234";
 
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    @Value("${default.redirect:http://localhost:8080/redbyzan/sparklr/redirect}")
+    @Value("${default.redirect:http://localhost:8080/tonr2/sparklr/redirect}")
     private String defaultRedirectUri;
 
     @Override
@@ -52,54 +52,99 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     protected JwtAccessTokenConverter jwtTokenEnhancer() {
-        KeyStoreKeyFactory keyStoreFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt-test.jks"), KEY_PASSWORD.toCharArray());
+        KeyStoreKeyFactory keyStoreFactory = new KeyStoreKeyFactory(new ClassPathResource(Constant.KEY_FILE_NAME), Constant.KEY_PASSWORD.toCharArray());
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setKeyPair(keyStoreFactory.getKeyPair("jwt-test"));
+        converter.setKeyPair(keyStoreFactory.getKeyPair(Constant.KEY_FILE_ALIAS));
         return converter;
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         //// TODO: 2016. 4. 26. inMemory -> datasource
-        clients.inMemory().withClient("redbyzan")
+//        clients.inMemory().withClient("redbyzan")
+//                .resourceIds(DUMMY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write")
+//                .secret("secret")
+//            .and()
+//                .withClient("redbyzan-with-redirect")
+//                .resourceIds(DUMMY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write")
+//                .secret("secret")
+//                .redirectUris(defaultRedirectUri)
+//            .and()
+//                .withClient("my-client-with-registered-redirect")
+//                .resourceIds(DUMMY_RESOURCE_ID)
+//                .authorizedGrantTypes("authorization_code", "client_credentials")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "trust")
+//                .redirectUris("http://anywhere?key=value")
+//            .and()
+//                .withClient("my-trusted-client")
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit","client_credentials")
+//                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .accessTokenValiditySeconds(60)
+//            .and()
+//                .withClient("my-trusted-client-with-secret")
+//                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit","client_credentials")
+//                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .secret("somesecret")
+//            .and()
+//                .withClient("my-less-trusted-client")
+//                .authorizedGrantTypes("authorization_code", "implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write", "trust")
+//            .and()
+//                .withClient("my-less-trusted-autoapprove-client")
+//                .authorizedGrantTypes("implicit")
+//                .authorities("ROLE_CLIENT")
+//                .scopes("read", "write", "trust")
+//                .autoApprove(true);
+
+        clients.inMemory().withClient("tonr")
                 .resourceIds(DUMMY_RESOURCE_ID)
                 .authorizedGrantTypes("authorization_code", "implicit")
                 .authorities("ROLE_CLIENT")
                 .scopes("read", "write")
                 .secret("secret")
-            .and()
-                .withClient("redbyzan-with-redirect")
+                .and()
+                .withClient("tonr-with-redirect")
                 .resourceIds(DUMMY_RESOURCE_ID)
                 .authorizedGrantTypes("authorization_code", "implicit")
                 .authorities("ROLE_CLIENT")
                 .scopes("read", "write")
                 .secret("secret")
                 .redirectUris(defaultRedirectUri)
-            .and()
+                .and()
                 .withClient("my-client-with-registered-redirect")
                 .resourceIds(DUMMY_RESOURCE_ID)
                 .authorizedGrantTypes("authorization_code", "client_credentials")
                 .authorities("ROLE_CLIENT")
                 .scopes("read", "trust")
                 .redirectUris("http://anywhere?key=value")
-            .and()
+                .and()
                 .withClient("my-trusted-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit","client_credentials")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .accessTokenValiditySeconds(60)
-            .and()
+                .and()
                 .withClient("my-trusted-client-with-secret")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit","client_credentials")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .secret("somesecret")
-            .and()
+                .and()
                 .withClient("my-less-trusted-client")
                 .authorizedGrantTypes("authorization_code", "implicit")
                 .authorities("ROLE_CLIENT")
                 .scopes("read", "write", "trust")
-            .and()
+                .and()
                 .withClient("my-less-trusted-autoapprove-client")
                 .authorizedGrantTypes("implicit")
                 .authorities("ROLE_CLIENT")

@@ -1,5 +1,6 @@
 package io.redbyzan.spystagram.config;
 
+import io.redbyzan.spystagram.common.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // TODO: 2016. 4. 27. inMemrory -> datasource
-        auth.inMemoryAuthentication().withUser("user").password("testpass").roles("USER");
+        auth.inMemoryAuthentication().withUser("user").password(Constant.KEY_PASSWORD).roles("USER");
     }
 
     @Bean

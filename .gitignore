@@ -1,0 +1,46 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+.idea/
+gradle/
+out/
+
+# generated files
+build/
+bin/
+
+#setting files
+.gradle
+
+dist/
+node_modules/
+/build/
+
+# Operating System Files
+*.DS_Store
+Thumbs.db
+*.sw?
+.#*
+*#
+*~
+*.sublime-*
+
+# Build Artifacts
+target/
+dependency-reduced-pom.xml
+
+# IntelliJ IDEA Files
+*.iml
+*.ipr
+*.iws
+*.idea
+
+idsoption-lib
